@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "107985713703",
+    "project_id": "edu-plan-app-9151d",
+    "storage_bucket": "edu-plan-app-9151d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107985713703:android:ce3bb2b24d190b25bdec02",
+        "android_client_info": {
+          "package_name": "in.flutterverse.eduplanapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwJB7mfN5bPOMEiv7CY77bcFP0aLgquCc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
