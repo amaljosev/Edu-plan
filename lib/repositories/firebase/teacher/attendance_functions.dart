@@ -66,6 +66,8 @@ class AttendenceFunctions {
             absentCounter += 1;
           }
         }
+        if (totalAbsentDays < 0) totalAbsentDays = 0;
+        if (totalPresentDays < 0) totalPresentDays = 0;
 
         await studentsCollection.doc(student.id).update({
           'total_present_days': totalPresentDays,
@@ -95,11 +97,17 @@ class AttendenceFunctions {
       String attendanceId,
       bool isUpdate) async {
     try {
+      int todayAbsents = attendanceData.todayAbsents;
+      int todayPresents = attendanceData.todayPresents;
+   
+      if (todayAbsents < 0) todayAbsents = 0;
+      if (todayPresents < 0) todayPresents = 0;
+    
       Map<String, dynamic> studentFeeMap = {
         'toatal_working_days_completed':
             attendanceData.totalWorkingDaysCompleted,
-        'total_absents': attendanceData.todayAbsents,
-        'total_presents': attendanceData.todayPresents,
+        'total_absents': todayAbsents, 
+        'total_presents': todayPresents,
       };
       await FirebaseFirestore.instance
           .collection('teachers')
