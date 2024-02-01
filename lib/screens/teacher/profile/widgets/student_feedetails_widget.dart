@@ -5,9 +5,8 @@ import 'package:eduplanapp/repositories/core/colors.dart';
 import 'package:eduplanapp/repositories/core/constants.dart';
 import 'package:eduplanapp/repositories/core/textstyle.dart';
 import 'package:eduplanapp/screens/teacher/controllers/teacherBloc1/teacher_bloc.dart';
-import 'package:eduplanapp/screens/teacher/profile/widgets/fee_edit_screen.dart';
+import 'package:eduplanapp/screens/teacher/profile/fee/fee_edit_screen.dart';
 import 'package:eduplanapp/screens/teacher/profile/widgets/shimmerloading_student_fee.dart';
-import 'package:eduplanapp/screens/widgets/button_widget.dart';
 
 class StudentFeeDetailsWidget extends StatelessWidget {
   const StudentFeeDetailsWidget({
@@ -31,6 +30,7 @@ class StudentFeeDetailsWidget extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => ScreenFeeUpdateTeacher(
+                  isOfflinePaymet: state.isOfflinePaymet,
                   studentId: state.studentId,
                   feeData: state.feeData,
                 ),
@@ -87,8 +87,8 @@ class StudentFeeDetailsWidget extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      'Total Amount :',
-                                      style: contentTextStyle,
+                                      'Total Fee :',
+                                      style: contentTextStyle, 
                                     ),
                                     kHeight,
                                     Text(
@@ -111,7 +111,7 @@ class StudentFeeDetailsWidget extends StatelessWidget {
                                     ),
                                     kHeight,
                                     Text(
-                                      ' ₹${feeData['amount_paid']}',
+                                      ' ₹${feeData['amount_paid']}', 
                                       style: contentTextStyle,
                                     ),
                                     kHeight,
@@ -124,20 +124,20 @@ class StudentFeeDetailsWidget extends StatelessWidget {
                               ],
                             ),
                           ),
-                          isTeacher
-                              ? Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: ButtonSubmissionWidget(
-                                    label: 'Edit',
-                                    icon: Icons.edit,
-                                    onTap: () => context
-                                        .read<TeacherBloc>()
-                                        .add(UpdateFeeScreenEvent(
-                                            feeData: feeData,
-                                            studentId: studentId)),
-                                  ),
-                                )
-                              : const Row(),
+                          ElevatedButton.icon(
+                              onPressed: () => context.read<TeacherBloc>().add(
+                                  UpdateFeeScreenEvent(
+                                    isOfflinePaymet: false,
+                                      feeData: feeData, studentId: studentId)),
+                              icon: Icon(Icons.save),
+                              label: Text('Create new Payment')),
+                          ElevatedButton.icon(
+                              onPressed: () => context.read<TeacherBloc>().add(
+                                  UpdateFeeScreenEvent(
+                                    isOfflinePaymet: true, 
+                                      feeData: feeData, studentId: studentId)),
+                              icon: Icon(Icons.save),
+                              label: Text('Offline Payments')),
                         ],
                       ),
                     ),

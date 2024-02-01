@@ -84,3 +84,25 @@ final class DeletePickedImageState extends StudentActionState {
    final int index;
   DeletePickedImageState({required this.index}); 
 }
+final class FetchPaymentDataSuccessState extends StudentActionState {
+  final Stream<QuerySnapshot<Object?>> PaymentData;
+  final Stream<QuerySnapshot<Object?>> feeData;
+  FetchPaymentDataSuccessState({required this.PaymentData,required this.feeData}); 
+}
+
+final class FetchPaymentDataErrorState extends StudentActionState {}
+
+final class FetchPaymentDataLoadingState extends StudentActionState {}
+
+final class PaymentSuccessState extends StudentActionState {
+  PaymentSuccessResponse response;
+  PaymentSuccessState({required this.response});
+}
+final class PaymentErrorState extends StudentActionState {
+  PaymentFailureResponse response;
+  PaymentErrorState({required this.response}); 
+}
+final class PaymentWalletState extends StudentActionState {
+   ExternalWalletResponse response;
+   PaymentWalletState({required this.response});
+} 

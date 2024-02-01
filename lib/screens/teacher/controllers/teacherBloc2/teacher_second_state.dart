@@ -116,3 +116,32 @@ final class DeleteEventSuccessState extends TeacherSecondActionState {}
 final class DeleteEventLoadingState extends TeacherSecondActionState {}
 
 final class DeleteEventErrorState extends TeacherSecondActionState {}
+
+final class PaymentAddedSuccessState extends TeacherSecondActionState {}
+
+final class PaymentAddedLoadingState extends TeacherSecondActionState {}
+
+final class PaymentAddedErrorState extends TeacherSecondActionState {}
+
+final class FetchNewPaymentDataSuccessState extends TeacherSecondActionState {
+  final Stream<QuerySnapshot<Object?>> paymentData;
+  FetchNewPaymentDataSuccessState({required this.paymentData});
+}
+
+final class FetchNewPaymentDataLoadingState extends TeacherSecondActionState {}
+
+final class FetchNewPaymentDataErrorState extends TeacherSecondActionState {}
+final class OfflineFeeSuccessState extends TeacherSecondActionState {}
+
+final class OfflineFeeLoadingState extends TeacherSecondActionState {}
+
+final class OfflineFeeErrorState extends TeacherSecondActionState {}
+
+final class FetchOfflineFeeSuccessState extends TeacherSecondActionState {
+  final Stream<QuerySnapshot<Object?>> OfflineFeeData; 
+  FetchOfflineFeeSuccessState({required this.OfflineFeeData});
+}
+
+final class FetchOfflineFeeLoadingState extends TeacherSecondActionState {}
+
+final class FetchOfflineFeeErrorState extends TeacherSecondActionState {}

@@ -120,3 +120,21 @@ final class TaskDeleteEvent extends TeacherSecondActionEvent {
   final bool isHw;
   TaskDeleteEvent({required this.taskId, required this.isHw});
 }
+final class AddANewPaymentEvent extends TeacherSecondActionEvent{
+  final NewPaymentModel paymentModel;
+  final String studentId;
+  AddANewPaymentEvent({required this.paymentModel,required this.studentId});
+}
+final class FetchNewPaymentDataEvent extends TeacherSecondActionEvent{
+  String studentId;
+  FetchNewPaymentDataEvent({required this.studentId});
+}
+final class OfflineFeeEvent extends TeacherSecondActionEvent{
+  String studentId;
+  String amount;
+  OfflineFeeEvent({required this.studentId,required this.amount}); 
+}
+final class FetchOfflineFeeEvent extends TeacherSecondActionEvent{
+  String studentId;
+  FetchOfflineFeeEvent({required this.studentId});
+}

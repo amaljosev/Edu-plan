@@ -180,7 +180,9 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
   FutureOr<void> updateFeeScreenEvent(
       UpdateFeeScreenEvent event, Emitter<TeacherState> emit) {
     emit(UpdateFeeScreenState(
-        feeData: event.feeData, studentId: event.studentId));
+        feeData: event.feeData,
+        studentId: event.studentId,
+        isOfflinePaymet: event.isOfflinePaymet));
   }
 
   FutureOr<void> updateStudentFeeEvent(

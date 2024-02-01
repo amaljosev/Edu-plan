@@ -19,15 +19,42 @@ class DbFunctionsStudent {
     }
   }
 
-  FutureOr<CollectionReference<Map<String, dynamic>>> getFeeDetails(
-      String teacherId, String studentId) {
-    final CollectionReference<Map<String, dynamic>> studentFeeCollection =
-        FirebaseFirestore.instance
-            .collection('teachers')
-            .doc(teacherId)
-            .collection('students')
-            .doc(studentId)
-            .collection('student_fee');
-    return studentFeeCollection;
+ 
+  
+  Stream<QuerySnapshot<Object?>> getPayment( 
+      {required String teacherId, required String studentId}) {
+    final CollectionReference studentCollection = FirebaseFirestore.instance
+        .collection('teachers')
+        .doc(teacherId)
+        .collection('students')
+        .doc(studentId)
+        .collection('payment_data');
+    final studentsStream = studentCollection.snapshots();
+
+    return studentsStream;
+  }
+  Stream<QuerySnapshot<Object?>> getFeeDetails( 
+      {required String teacherId, required String studentId}) {
+    final CollectionReference studentCollection = FirebaseFirestore.instance
+        .collection('teachers')
+        .doc(teacherId)
+        .collection('students')
+        .doc(studentId)
+        .collection('student_fee');
+    final studentsStream = studentCollection.snapshots();
+
+    return studentsStream;
+  }
+  Stream<QuerySnapshot<Object?>> getOfflineFee( 
+      {required String teacherId, required String studentId}) {
+    final CollectionReference studentCollection = FirebaseFirestore.instance
+        .collection('teachers')
+        .doc(teacherId)
+        .collection('students')
+        .doc(studentId)
+        .collection('offline_payments'); 
+    final studentsStream = studentCollection.snapshots();
+
+    return studentsStream;
   }
 }

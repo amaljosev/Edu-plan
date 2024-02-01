@@ -178,4 +178,25 @@ class DbFunctions {
       return false;
     }
   }
+  Future<bool> newPayment(
+      {required Map<String, dynamic> map,
+      required String teacherCollectionName,
+      required String teacherId,
+      required String studentCollectionName,
+      required String studentId,
+      required String newCollectionName}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(teacherCollectionName)
+          .doc(teacherId)
+          .collection(studentCollectionName)
+          .doc(studentId)
+          .collection(newCollectionName)
+          .doc()
+          .set(map);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

@@ -76,3 +76,27 @@ final class DeletePickedImage extends StudentActionEvent {
   final int index;
   DeletePickedImage({required this.index});
 }
+
+final class FetchPaymentDataEvent extends StudentActionEvent {}
+
+final class RazorPaySuccessEvent extends StudentActionEvent {
+  String paymentId;
+  String note;
+  int amount;
+  PaymentSuccessResponse response;
+  RazorPaySuccessEvent(
+      {required this.response,
+      required this.paymentId,
+      required this.amount,
+      required this.note});
+}
+
+final class RazorPayErrorEvent extends StudentActionEvent {
+  PaymentFailureResponse response;
+  RazorPayErrorEvent({required this.response});
+}
+
+final class RazorPayWalletEvent extends StudentActionEvent {
+  ExternalWalletResponse response;
+  RazorPayWalletEvent({required this.response});
+}

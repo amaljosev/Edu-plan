@@ -87,7 +87,12 @@ final class FetchClassDetailsLoadingState extends TeacherActionState {}
 final class UpdateFeeScreenState extends TeacherActionState {
   final Map<String, dynamic> feeData;
   final String studentId;
-  UpdateFeeScreenState({required this.feeData, required this.studentId});
+  final bool isOfflinePaymet;
+  UpdateFeeScreenState({
+    required this.feeData,
+    required this.studentId,
+    required this.isOfflinePaymet,
+  });
 }
 
 final class UpdateStudentFeeState extends TeacherActionState {}

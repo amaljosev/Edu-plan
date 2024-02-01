@@ -19,7 +19,7 @@ class StudentActionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String studentName = studentsMap?['first_name'] ?? 'Default Name'; 
-
+ 
     return GestureDetector(
       onTap: () => context.read<StudentBloc>().add(StudentActionsEvent(
             index: index,

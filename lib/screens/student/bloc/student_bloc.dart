@@ -1,12 +1,15 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eduplanapp/repositories/firebase/teacher/fee/payment_remainder_functions.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/repositories/firebase/student/db_functions_student.dart';
 import 'package:eduplanapp/repositories/firebase/student/tasks_functions.dart';
 import 'package:eduplanapp/repositories/firebase/teacher/db_functions_teacher.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 part 'student_event.dart';
 part 'student_state.dart';
@@ -25,6 +28,10 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     on<SelectFileEvent>(selectFileEvent);
     on<UploadFileEvent>(uploadFileEvent);
     on<DeletePickedImage>(deletePickedImage);
+    on<FetchPaymentDataEvent>(fetchPaymentDataEvent);
+    on<RazorPaySuccessEvent>(razorPaySuccessEvent);
+    on<RazorPayErrorEvent>(razorPayErrorEvent);
+    on<RazorPayWalletEvent>(razorPayWalletEvent);
   }
 
   FutureOr<void> bottomNavigationEvent(
@@ -177,6 +184,48 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
 
   FutureOr<void> deletePickedImage(
       DeletePickedImage event, Emitter<StudentState> emit) {
-    emit(DeletePickedImageState(index: event.index)); 
+    emit(DeletePickedImageState(index: event.index));
+  }
+
+  FutureOr<void> fetchPaymentDataEvent(
+      FetchPaymentDataEvent event, Emitter<StudentState> emit) async {
+    emit(FetchPaymentDataLoadingState());
+    try {
+      final String? teacherId =
+          await DbFunctionsTeacher().getTeacherIdFromPrefs();
+      final studentId =
+          await DbFunctionsTeacher().getStudentIdFromPrefs() as String;
+      Stream<QuerySnapshot<Object?>> paymentStream = DbFunctionsStudent()
+          .getPayment(studentId: studentId, teacherId: teacherId as String);
+      Stream<QuerySnapshot<Object?>> feeStream = DbFunctionsStudent()
+          .getFeeDetails(studentId: studentId, teacherId: teacherId);
+      emit(FetchPaymentDataSuccessState(
+          PaymentData: paymentStream, feeData: feeStream));
+    } catch (e) {
+      emit(FetchPaymentDataErrorState());
+    }
+  }
+
+  FutureOr<void> razorPaySuccessEvent(
+      RazorPaySuccessEvent event, Emitter<StudentState> emit) async {
+    try {
+      final studentId =
+          await DbFunctionsTeacher().getStudentIdFromPrefs() as String;
+      await PaymentFunctionsTeacher()
+          .updatePayment(studentId, event.paymentId, event.note, event.amount);
+      emit(PaymentSuccessState(response: event.response));
+    } catch (e) {
+      log('$e');
+    }
+  }
+
+  FutureOr<void> razorPayErrorEvent(
+      RazorPayErrorEvent event, Emitter<StudentState> emit) {
+    emit(PaymentErrorState(response: event.response));
+  }
+
+  FutureOr<void> razorPayWalletEvent(
+      RazorPayWalletEvent event, Emitter<StudentState> emit) {
+    emit(PaymentWalletState(response: event.response));
   }
 }

@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eduplanapp/models/new_payment_model.dart';
+import 'package:eduplanapp/repositories/firebase/student/db_functions_student.dart';
+import 'package:eduplanapp/repositories/firebase/teacher/fee/payment_remainder_functions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/models/teacher_model.dart';
 import 'package:eduplanapp/repositories/firebase/student/leave_db_functions.dart';
@@ -34,6 +37,10 @@ class TeacherSecondBloc extends Bloc<TeacherSecondEvent, TeacherSecondState> {
     on<DeleteStudentEvent>(deleteStudentEvent);
     on<EventDeleteEvent>(eventDeleteEvent);
     on<TaskDeleteEvent>(taskDeleteEvent);
+    on<AddANewPaymentEvent>(addANewPaymentEvent);
+    on<FetchNewPaymentDataEvent>(fetchNewPaymentDataEvent);
+    on<OfflineFeeEvent>(offlineFeeEvent);
+    on<FetchOfflineFeeEvent>(fetchOfflineFeeEvent);
   }
 
   FutureOr<void> checkBoxTapEvent(
@@ -328,6 +335,64 @@ class TeacherSecondBloc extends Bloc<TeacherSecondEvent, TeacherSecondState> {
       }
     } catch (e) {
       emit(DeleteEventErrorState());
+    }
+  }
+
+  FutureOr<void> addANewPaymentEvent(
+      AddANewPaymentEvent event, Emitter<TeacherSecondState> emit) async {
+    emit(PaymentAddedLoadingState());
+    try {
+      final response = await PaymentFunctionsTeacher()
+          .giveNewPayment(event.paymentModel, event.studentId);
+      if (response) {
+        emit(PaymentAddedSuccessState());
+      } else {
+        emit(PaymentAddedErrorState());
+      }
+    } catch (e) {
+      emit(PaymentAddedErrorState());
+    }
+  }
+
+  FutureOr<void> fetchNewPaymentDataEvent(
+      FetchNewPaymentDataEvent event, Emitter<TeacherSecondState> emit) async {
+    try {
+      emit(FetchNewPaymentDataLoadingState());
+      id = await DbFunctionsTeacher().getTeacherIdFromPrefs();
+      final Stream<QuerySnapshot<Object?>> paymentData = DbFunctionsStudent()
+          .getPayment(teacherId: id as String, studentId: event.studentId);
+      emit(FetchNewPaymentDataSuccessState(paymentData: paymentData));
+    } catch (e) {
+      emit(FetchNewPaymentDataErrorState());
+    }
+  }
+
+  FutureOr<void> offlineFeeEvent(
+      OfflineFeeEvent event, Emitter<TeacherSecondState> emit) async {
+    emit(OfflineFeeLoadingState());
+    try {
+      final response = await PaymentFunctionsTeacher()
+          .offlinePayment(event.amount, event.studentId);
+      if (response) {
+        emit(OfflineFeeSuccessState());
+      } else {
+        emit(OfflineFeeErrorState());
+      }
+    } catch (e) {
+      emit(OfflineFeeErrorState());
+    }
+  }
+
+  FutureOr<void> fetchOfflineFeeEvent(
+      FetchOfflineFeeEvent event, Emitter<TeacherSecondState> emit) async {
+    try {
+      emit(FetchOfflineFeeLoadingState());
+      id = await DbFunctionsTeacher().getTeacherIdFromPrefs();
+      final Stream<QuerySnapshot<Object?>> offlineFeeData = DbFunctionsStudent()
+          .getOfflineFee(teacherId: id as String, studentId: event.studentId); 
+      emit(FetchOfflineFeeSuccessState(OfflineFeeData: offlineFeeData));
+    } catch (e) {
+      emit(FetchOfflineFeeErrorState());
     }
   }
 }

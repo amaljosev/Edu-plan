@@ -22,7 +22,7 @@ final class AddStudentEvent extends TeacherActionEvent {
 
 final class AttendenceEvent extends TeacherActionEvent {
   final bool isVisited;
-  AttendenceEvent({required this.isVisited}); 
+  AttendenceEvent({required this.isVisited});
 }
 
 final class StudentProfileEvent extends TeacherActionEvent {
@@ -65,7 +65,11 @@ final class FetchClassDetailsEvent extends TeacherActionEvent {}
 final class UpdateFeeScreenEvent extends TeacherActionEvent {
   final Map<String, dynamic> feeData;
   final String studentId;
-  UpdateFeeScreenEvent({required this.feeData, required this.studentId});
+  final bool isOfflinePaymet;
+  UpdateFeeScreenEvent(
+      {required this.feeData,
+      required this.studentId,
+      required this.isOfflinePaymet});
 }
 
 final class UpdateStudentFeeEvent extends TeacherActionEvent {

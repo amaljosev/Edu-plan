@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eduplanapp/screens/student/fee/screen_fee.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/repositories/core/colors.dart';
@@ -7,7 +8,6 @@ import 'package:eduplanapp/repositories/core/loading.dart';
 import 'package:eduplanapp/screens/student/events/event_screen_student.dart';
 import 'package:eduplanapp/screens/student/settings/settings_widget.dart';
 import 'package:eduplanapp/screens/student/widgets/attendance_popup.dart';
-import 'package:eduplanapp/screens/student/widgets/fee_popup.dart';
 import 'package:eduplanapp/screens/student/bloc/student_bloc.dart';
 import 'package:eduplanapp/screens/student/tasks/student_tasks_screen.dart';
 import 'package:eduplanapp/screens/student/widgets/student_home_widget.dart';
@@ -51,7 +51,9 @@ class _ScreenStudentState extends State<ScreenStudent> {
 
       if (state is StudentActionsState) {
         if (state.index == 1) {
-          feePopupMessage(context: context);
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ScreenFeeStudent(), 
+          ));
         } else if (state.index == 0) {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ScreenStudentTasks(
@@ -84,18 +86,16 @@ class _ScreenStudentState extends State<ScreenStudent> {
                   snapshot.data!.data() as Map<String, dynamic>;
               final String name = studentData['first_name'];
               return Scaffold(
-                appBar: myAppbar('Student'),  
+                appBar: myAppbar('Student'),
                 body: IndexedStack(
-                      index: currentPageIndex,
-                      children: <Widget>[
-                        StudentHomeWidget(studentId: id, students: studentData),
-                        ScreenSchoolEvents(isTeacher: false, name: name),
-                        const ScreenEventsStudent(),
-                        const SettingsWidgetStudent(),
-                      ],
-                    ),
-                   
-                
+                  index: currentPageIndex,
+                  children: <Widget>[
+                    StudentHomeWidget(studentId: id, students: studentData),
+                    ScreenSchoolEvents(isTeacher: false, name: name),
+                    const ScreenEventsStudent(),
+                    const SettingsWidgetStudent(),
+                  ],
+                ),
                 bottomNavigationBar: NavigationBar(
                   onDestinationSelected: (int index) {
                     context.read<StudentBloc>().add(
