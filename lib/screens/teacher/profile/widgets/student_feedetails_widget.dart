@@ -84,20 +84,20 @@ class StudentFeeDetailsWidget extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Total Fee :',
-                                      style: contentTextStyle, 
-                                    ),
-                                    kHeight,
-                                    Text(
-                                      'Amount Paid :',
+                                      'Total Fee',
                                       style: contentTextStyle,
                                     ),
                                     kHeight,
                                     Text(
-                                      'Amount Pending :',
+                                      'Amount Paid',
+                                      style: contentTextStyle,
+                                    ),
+                                    kHeight,
+                                    Text(
+                                      'Amount Pending',
                                       style: contentTextStyle,
                                     ),
                                   ],
@@ -106,17 +106,17 @@ class StudentFeeDetailsWidget extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      ' ₹${feeData['total_amount']}',
+                                      ' : ₹${feeData['total_amount']}',
                                       style: contentTextStyle,
                                     ),
                                     kHeight,
                                     Text(
-                                      ' ₹${feeData['amount_paid']}', 
+                                      ' : ₹${feeData['amount_paid']}',
                                       style: contentTextStyle,
                                     ),
                                     kHeight,
                                     Text(
-                                      ' ₹${feeData['amount_pending']}',
+                                      ' : ₹${feeData['amount_pending']}',
                                       style: contentTextStyle,
                                     ),
                                   ],
@@ -127,17 +127,20 @@ class StudentFeeDetailsWidget extends StatelessWidget {
                           ElevatedButton.icon(
                               onPressed: () => context.read<TeacherBloc>().add(
                                   UpdateFeeScreenEvent(
-                                    isOfflinePaymet: false,
-                                      feeData: feeData, studentId: studentId)),
-                              icon: Icon(Icons.save),
+                                      isOfflinePaymet: false,
+                                      feeData: feeData,
+                                      studentId: studentId)),
+                              style: ElevatedButton.styleFrom(),
+                              icon: Icon(Icons.payment), 
                               label: Text('Create new Payment')),
                           ElevatedButton.icon(
                               onPressed: () => context.read<TeacherBloc>().add(
                                   UpdateFeeScreenEvent(
-                                    isOfflinePaymet: true, 
-                                      feeData: feeData, studentId: studentId)),
-                              icon: Icon(Icons.save),
-                              label: Text('Offline Payments')),
+                                      isOfflinePaymet: true,
+                                      feeData: feeData,
+                                      studentId: studentId)),
+                              icon: Icon(Icons.update),
+                              label: Text('Update Payments')), 
                         ],
                       ),
                     ),

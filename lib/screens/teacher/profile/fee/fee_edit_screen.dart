@@ -58,7 +58,6 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
       listener: (context, state) {
         if (state is UpdateStudentFeeState) {
           context.read<TeacherBloc>().add(FetchStudentDatasEvent());
-          Navigator.pop(context);
         }
       },
       builder: (context, state) {
@@ -76,7 +75,6 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
               AlertMessages().alertMessageSnakebar(
                   context, 'Added Successfully', Colors.green);
               feeNoteController.text = '';
-              Navigator.pop(context);
             } else if (state is PaymentAddedErrorState) {
               AlertMessages()
                   .alertMessageSnakebar(context, 'Try Again', Colors.red);
@@ -88,7 +86,7 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
           builder: (context, state) {
             return Scaffold(
               appBar: myAppbar(widget.isOfflinePaymet
-                  ? 'Offline Payments'
+                  ? 'Update Payments'
                   : 'Online Payments'),
               body: Form(
                 key: Payment_Form_Key,
@@ -98,7 +96,7 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.5,
+                        height: MediaQuery.of(context).size.height * 0.4,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -123,8 +121,10 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                                 ? Text('Pending Amount : $balanceAmount')
                                 : Row(),
                             TextFormField(
-                              decoration: const InputDecoration(
-                                  labelText: 'New Payment'),
+                              decoration: InputDecoration(
+                                  labelText: widget.isOfflinePaymet
+                                      ? 'Paid Fee'
+                                      : 'New Payment'),
                               controller: paidAmountController,
                               keyboardType: TextInputType.number,
                               validator: (value) =>
@@ -170,7 +170,7 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                                           }
                                         },
                                         icon: Icon(Icons.save),
-                                        label: Text('Save Offline Payment'))
+                                        label: Text('Save Payment'))
                                     : Row(),
                               ],
                             ),
@@ -193,8 +193,15 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                           } else if (snapshot.hasData) {
                             List<DocumentSnapshot> paymentDatas =
                                 snapshot.data!.docs;
+                            paymentDatas.sort((a, b) {
+                              DateTime dateA =
+                                  (a['date'] as Timestamp).toDate();
+                              DateTime dateB =
+                                  (b['date'] as Timestamp).toDate();
+                              return dateB.compareTo(dateA);
+                            });
                             return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.4,
+                              height: MediaQuery.of(context).size.height * 0.4,  
                               child: ListView.separated(
                                 padding: EdgeInsets.all(10),
                                 separatorBuilder: (context, index) => kHeight,
@@ -204,11 +211,11 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                                   String formattedDate = '';
                                   if (!widget.isOfflinePaymet) {
                                     isPayed = data['isPayed'];
-                                    final timestamp = data['date'];
-                                    DateTime date = timestamp.toDate();
-                                    formattedDate =
-                                        DateFormat('dd MM yyy').format(date);
                                   }
+                                  final timestamp = data['date'];
+                                  DateTime date = timestamp.toDate();
+                                  formattedDate =
+                                      DateFormat('dd-MM-yyy').format(date);
 
                                   return Card(
                                     child: ListTile(
@@ -246,20 +253,22 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                                               ),
                                             ],
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Date',
-                                                style: listViewTextStyle,
-                                              ),
-                                              Text(
-                                                ' : $formattedDate',
-                                                style: listViewTextStyle,
-                                              ),
-                                            ],
-                                          ),
+                                          widget.isOfflinePaymet
+                                              ? Row()
+                                              : Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'Date',
+                                                      style: listViewTextStyle,
+                                                    ),
+                                                    Text(
+                                                      ' : $formattedDate',
+                                                      style: listViewTextStyle,
+                                                    ),
+                                                  ],
+                                                ),
                                         ],
                                       ),
                                       trailing: Text(

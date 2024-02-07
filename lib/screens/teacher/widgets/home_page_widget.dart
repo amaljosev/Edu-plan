@@ -16,7 +16,7 @@ class HomePageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return SingleChildScrollView( 
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

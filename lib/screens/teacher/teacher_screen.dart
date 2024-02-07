@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/repositories/core/colors.dart';
@@ -33,74 +34,98 @@ class _ScreenTeacherState extends State<ScreenTeacher> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          appBar:myAppbar('Teacher'), 
-          body: IndexedStack(
-                index: currentPageIndex,
-                children: <Widget>[
-                  HomePageWidget(size: size),
-                  AddTaskWidget(
-                    size: size,
+        return PopScope(
+          canPop: false,
+          onPopInvoked: (didPop) {
+            if (!didPop) {
+              if (currentPageIndex == 0) {
+                showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Text('Are you sure you want to leave?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => exit(0),
+                        child: Text('Yes'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text('No'),
+                      ),
+                    ],
                   ),
-                  const AttendenceHistoryWidget(),
-                  TeacherProfileWidget(size: size),
-                ],
-              ),
-             
-          bottomNavigationBar: NavigationBar(
-            onDestinationSelected: (int index) {
-              context
-                  .read<TeacherBloc>()
-                  .add(BottomNavigationEvent(currentPageIndex: index));
-            },
-            indicatorColor: appbarColor,
-            selectedIndex: currentPageIndex,
-            destinations: const <Widget>[
-              NavigationDestination(
-                selectedIcon: Icon(
-                  Icons.home,
-                  color: headingColor,
+                );
+              }
+            }
+          },
+          child: Scaffold(
+            appBar: myAppbar('Teacher'),
+            body: IndexedStack(
+              index: currentPageIndex,
+              children: <Widget>[
+                HomePageWidget(size: size),
+                AddTaskWidget(
+                  size: size,
                 ),
-                icon: Icon(
-                  Icons.home_outlined,
-                  color: headingColor,
+                const AttendenceHistoryWidget(),
+                TeacherProfileWidget(size: size),
+              ],
+            ),
+            bottomNavigationBar: NavigationBar(
+              onDestinationSelected: (int index) {
+                context
+                    .read<TeacherBloc>()
+                    .add(BottomNavigationEvent(currentPageIndex: index));
+              },
+              indicatorColor: appbarColor,
+              selectedIndex: currentPageIndex,
+              destinations: const <Widget>[
+                NavigationDestination(
+                  selectedIcon: Icon(
+                    Icons.home,
+                    color: headingColor,
+                  ),
+                  icon: Icon(
+                    Icons.home_outlined,
+                    color: headingColor,
+                  ),
+                  label: 'Home',
                 ),
-                label: 'Home',
-              ),
-              NavigationDestination(
-                icon: Icon(
-                  Icons.assignment_outlined,
-                  color: headingColor,
+                NavigationDestination(
+                  icon: Icon(
+                    Icons.assignment_outlined,
+                    color: headingColor,
+                  ),
+                  selectedIcon: Icon(
+                    Icons.assignment,
+                    color: headingColor,
+                  ),
+                  label: 'Add Task',
                 ),
-                selectedIcon: Icon(
-                  Icons.assignment,
-                  color: headingColor,
+                NavigationDestination(
+                  icon: Icon(
+                    Icons.bar_chart_rounded,
+                    color: headingColor,
+                  ),
+                  selectedIcon: Icon(
+                    Icons.bar_chart,
+                    color: headingColor,
+                  ),
+                  label: 'Staticstics',
                 ),
-                label: 'Add Task',
-              ),
-              NavigationDestination( 
-                icon: Icon(
-                  Icons.bar_chart_rounded,
-                  color: headingColor,
+                NavigationDestination(
+                  selectedIcon: Icon(
+                    Icons.person,
+                    color: headingColor,
+                  ),
+                  icon: Icon(
+                    Icons.person_outlined,
+                    color: headingColor,
+                  ),
+                  label: 'Profile',
                 ),
-                selectedIcon: Icon(
-                  Icons.bar_chart,
-                  color: headingColor,
-                ),
-                label: 'Staticstics',
-              ),
-              NavigationDestination(
-                selectedIcon: Icon(
-                  Icons.person,
-                  color: headingColor,
-                ),
-                icon: Icon(
-                  Icons.person_outlined,
-                  color: headingColor,
-                ),
-                label: 'Profile',
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
