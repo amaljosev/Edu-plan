@@ -79,6 +79,7 @@ class _PaymentHistoryWidgetState extends State<PaymentHistoryWidget> {
                     separatorBuilder: (context, index) => kHeight,
                     itemBuilder: (context, index) {
                       DocumentSnapshot data = paymentDatas[index];
+                      isPayed = data['isPayed'] ?? false; 
                       int amount = data['new-payment'];
                       amt = data['new-payment'];
                       note = data['note'];

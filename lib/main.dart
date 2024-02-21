@@ -11,10 +11,11 @@ import 'package:eduplanapp/screens/welcome/bloc/welcome_bloc.dart';
 import 'package:eduplanapp/screens/welcome/splash_screen.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
-  await Firebase.initializeApp(); 
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -41,15 +42,15 @@ class MyApp extends StatelessWidget {
           create: (context) => StudentBloc(),
         ),
       ],
-      child: MaterialApp( 
+      child: MaterialApp(
         title: 'School App',
         theme: ThemeData(
           scaffoldBackgroundColor: scaffoldColor,
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        debugShowCheckedModeBanner: false, 
-        home: const ScreenSplash(), 
+        debugShowCheckedModeBanner: false,
+        home: const ScreenSplash(),
       ),
     );
   }

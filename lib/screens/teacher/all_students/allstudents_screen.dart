@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eduplanapp/screens/teacher/chat/private_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/repositories/core/colors.dart';
@@ -8,8 +9,8 @@ import 'package:eduplanapp/screens/teacher/controllers/teacherBloc1/teacher_bloc
 import 'package:eduplanapp/screens/teacher/widgets/search_student_widget.dart';
 
 class ScreenAllStudentsTeacher extends StatefulWidget {
-  const ScreenAllStudentsTeacher({super.key});
-
+  const ScreenAllStudentsTeacher({super.key, required this.isChat});
+  final bool isChat;
   @override
   State<ScreenAllStudentsTeacher> createState() =>
       _ScreenAllStudentsTeacherState();
@@ -42,7 +43,7 @@ class _ScreenAllStudentsTeacherState extends State<ScreenAllStudentsTeacher> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    ScreenSearchStudent(students: state.studentList),
+                    ScreenSearchStudent(students: state.studentList,isChat: widget.isChat), 
               ));
         }
       },
@@ -98,11 +99,17 @@ class _ScreenAllStudentsTeacherState extends State<ScreenAllStudentsTeacher> {
                               style: contentTextStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            onTap: () => context.read<TeacherBloc>().add(
-                                StudentProfileEvent(
-                                    studentId: studentId,
-                                    students: studentMap,
-                                    studentFee: studentFee)),
+                            onTap: () => widget.isChat
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ScreenChatPrivate(),
+                                    ))
+                                : context.read<TeacherBloc>().add(
+                                    StudentProfileEvent(
+                                        studentId: studentId,
+                                        students: studentMap,
+                                        studentFee: studentFee)),
                           ),
                         );
                       },

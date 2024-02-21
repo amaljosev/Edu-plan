@@ -38,7 +38,7 @@ class HomePageWidget extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              const ScreenAllStudentsTeacher(),
+                              const ScreenAllStudentsTeacher(isChat: false), 
                         )),
                     child: const Text('All Students >'))
               ],

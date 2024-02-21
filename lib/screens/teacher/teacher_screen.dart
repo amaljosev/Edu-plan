@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:eduplanapp/repositories/core/textstyle.dart';
+import 'package:eduplanapp/screens/teacher/chat/chat_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/repositories/core/colors.dart';
@@ -7,7 +9,6 @@ import 'package:eduplanapp/screens/teacher/widgets/add_task_widget.dart';
 import 'package:eduplanapp/screens/teacher/widgets/attendace_history_widget.dart';
 import 'package:eduplanapp/screens/teacher/widgets/home_page_widget.dart';
 import 'package:eduplanapp/screens/teacher/widgets/teacher_profile_widget.dart';
-import 'package:eduplanapp/screens/widgets/my_appbar.dart';
 
 class ScreenTeacher extends StatefulWidget {
   const ScreenTeacher({super.key});
@@ -59,7 +60,26 @@ class _ScreenTeacherState extends State<ScreenTeacher> {
             }
           },
           child: Scaffold(
-            appBar: myAppbar('Teacher'),
+            appBar: AppBar(
+                backgroundColor: appbarColor,
+                title: Text(
+                  'Teacher',
+                  style: appbarTextStyle,
+                ),
+                actions: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ScreenChatHome(),
+                            ));
+                      },
+                      icon: Icon(
+                        Icons.message_outlined,
+                        color: contentColor,
+                      ))
+                ]),
             body: IndexedStack(
               index: currentPageIndex,
               children: <Widget>[

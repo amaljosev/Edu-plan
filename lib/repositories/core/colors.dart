@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-final Color scaffoldColor = Colors.deepPurple.shade50;
+final Color scaffoldColor = Colors.deepPurple.shade50; 
 
-final Color loginTextfieldColor = Colors.deepPurple.shade100;
+final Color loginTextfieldColor = Colors.deepPurple.shade100; 
 
 const Color whiteTextColor = Colors.white;
 

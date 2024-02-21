@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eduplanapp/screens/teacher/chat/private_chat.dart';
+import 'package:eduplanapp/screens/widgets/my_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,21 +11,22 @@ import 'package:eduplanapp/screens/teacher/controllers/teacherBloc1/teacher_bloc
 TextEditingController searchController = TextEditingController();
 
 class ScreenSearchStudent extends StatelessWidget {
-  const ScreenSearchStudent({Key? key, required this.students})
+  const ScreenSearchStudent(
+      {Key? key, required this.students, required this.isChat})
       : super(key: key);
   final List<DocumentSnapshot<Object?>> students;
-
+  final bool isChat;
   @override
   Widget build(BuildContext context) {
-    searchController.text=''; 
+    searchController.text = '';
     return BlocConsumer<TeacherBloc, TeacherState>(
       listener: (context, state) {
         if (state is SearchStudentScreenState) {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ScreenSearchStudent(students: state.studentList),
+                builder: (context) => ScreenSearchStudent(
+                    students: state.studentList, isChat: isChat),
               ));
         }
       },
@@ -40,6 +43,7 @@ class ScreenSearchStudent extends StatelessWidget {
         }).toList();
 
         return Scaffold(
+          appBar: myAppbar('Search Student'),
           body: SafeArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +86,7 @@ class ScreenSearchStudent extends StatelessWidget {
                 Expanded(
                   child: SizedBox(
                     child: ListView.separated(
-                      itemBuilder: (context, index) { 
+                      itemBuilder: (context, index) {
                         var studentMap = filteredStudents[index].data()
                             as Map<String, dynamic>;
                         final studentFee = filteredStudents[index]
@@ -95,13 +99,19 @@ class ScreenSearchStudent extends StatelessWidget {
                             "${filteredStudents[index]['first_name']} ${filteredStudents[index]['second_name']}",
                             style: contentTextStyle,
                           ),
-                          onTap: () => context.read<TeacherBloc>().add(
-                                StudentProfileEvent(
-                                  studentId: studentId,
-                                  students: studentMap,
-                                  studentFee: studentFee,
-                                ),
-                              ),
+                          onTap: () => isChat
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ScreenChatPrivate(),
+                                  ))
+                              : context.read<TeacherBloc>().add(
+                                    StudentProfileEvent(
+                                      studentId: studentId,
+                                      students: studentMap,
+                                      studentFee: studentFee,
+                                    ),
+                                  ),
                         );
                       },
                       separatorBuilder: (context, index) => const Divider(),
