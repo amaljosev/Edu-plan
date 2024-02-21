@@ -213,6 +213,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
           await DbFunctionsTeacher().getStudentIdFromPrefs() as String;
       await PaymentFunctionsTeacher()
           .updatePayment(studentId, event.paymentId, event.note, event.amount);
+
       emit(PaymentSuccessState(response: event.response));
     } catch (e) {
       log('$e');

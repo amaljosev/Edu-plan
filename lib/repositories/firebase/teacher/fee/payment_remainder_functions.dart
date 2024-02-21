@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eduplanapp/models/new_payment_model.dart';
 import 'package:eduplanapp/repositories/firebase/database_functions.dart';
@@ -51,29 +53,31 @@ class PaymentFunctionsTeacher {
     }
   }
 
-  Future<bool> updatePayment(String studentId, String paymentId, String note, int newPayment) async {
-  final String? teacherId = await DbFunctionsTeacher().getTeacherIdFromPrefs();
-  try {
-    Map<String, dynamic> paymentMap = {
-      'date': DateTime.now(),
-      'note': note,
-      'new-payment': newPayment,
-      'isPayed': true,
-    };
+  Future<bool> updatePayment(
+      String studentId, String paymentId, String note, int newPayment) async {
+    final String? teacherId =
+        await DbFunctionsTeacher().getTeacherIdFromPrefs();
+    try {
+      Map<String, dynamic> paymentMap = {
+        'date': DateTime.now(),
+        'note': note,
+        'new-payment': newPayment,
+        'isPayed': true,
+      };
+      log(paymentId);
 
-    await FirebaseFirestore.instance
-        .collection('teachers')
-        .doc(teacherId as String)
-        .collection('students')
-        .doc(studentId)
-        .collection('payment_data')
-        .doc(paymentId)
-        .update(paymentMap);
+      await FirebaseFirestore.instance
+          .collection('teachers')
+          .doc(teacherId as String)
+          .collection('students')
+          .doc(studentId)
+          .collection('payment_data')
+          .doc(paymentId)
+          .update(paymentMap);
 
-    return true;
-  } catch (e) {
-    return false;
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
-}
-
 }

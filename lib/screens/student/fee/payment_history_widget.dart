@@ -40,7 +40,7 @@ class _PaymentHistoryWidgetState extends State<PaymentHistoryWidget> {
   String docId = '';
   String note = '';
   int amt = 0;
-  bool isPayed = false;
+  late bool isPayed;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<StudentBloc, StudentState>(
@@ -50,7 +50,6 @@ class _PaymentHistoryWidgetState extends State<PaymentHistoryWidget> {
               context,
               'Payment Successfull \nPayment Id : ${state.response.paymentId}',
               Colors.green);
-          isPayed = true;
         } else if (state is PaymentErrorState) {
           AlertMessages().alertMessageSnakebar(context,
               'Payment Failed \nNote : ${state.response.message}', Colors.red);
@@ -79,11 +78,13 @@ class _PaymentHistoryWidgetState extends State<PaymentHistoryWidget> {
                     separatorBuilder: (context, index) => kHeight,
                     itemBuilder: (context, index) {
                       DocumentSnapshot data = paymentDatas[index];
-                      isPayed = data['isPayed'] ?? false; 
+
+                      isPayed = data['isPayed'] ?? false;
+
                       int amount = data['new-payment'];
                       amt = data['new-payment'];
                       note = data['note'];
-                      docId = data.id;
+
                       return Card(
                         elevation: 8,
                         child: ListTile(
@@ -114,8 +115,12 @@ class _PaymentHistoryWidgetState extends State<PaymentHistoryWidget> {
                             ],
                           ),
                           trailing: ElevatedButton(
-                            onPressed:
-                                isPayed ? () {} : () => openCheckout(amount),
+                            onPressed: isPayed
+                                ? () {}
+                                : () {
+                                    docId = data.id;
+                                    openCheckout(amount);
+                                  },
                             child: Text(
                               isPayed ? 'Paied' : 'Pay Now',
                               style: listViewTextStyle,
