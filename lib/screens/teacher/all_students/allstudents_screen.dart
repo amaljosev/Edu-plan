@@ -42,8 +42,8 @@ class _ScreenAllStudentsTeacherState extends State<ScreenAllStudentsTeacher> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    ScreenSearchStudent(students: state.studentList,isChat: widget.isChat), 
+                builder: (context) => ScreenSearchStudent(
+                    students: state.studentList, isChat: widget.isChat),
               ));
         }
       },
@@ -103,7 +103,16 @@ class _ScreenAllStudentsTeacherState extends State<ScreenAllStudentsTeacher> {
                                 ? Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => ScreenChatPrivate(),
+                                      builder: (context) => ScreenChatPrivate(
+                                        gender: student['gender'],
+                                        image: student['gender'] ==
+                                                'Gender.male'
+                                            ? 'lib/assets/images/student male.jpg'
+                                            : 'lib/assets/images/student female.png',
+                                        name:
+                                            "${student['first_name']} ${student['second_name']}",
+                                        studentId: studentId,
+                                      ),
                                     ))
                                 : context.read<TeacherBloc>().add(
                                     StudentProfileEvent(

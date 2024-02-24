@@ -50,7 +50,7 @@ class TeacherBloc extends Bloc<TeacherEvent, TeacherState> {
       final bool isExist = await StudentDbFunctions().checkRegNo(
           rollNo: event.studentData.rollNo,
           regNo: event.studentData.registerNo,
-          email: event.studentData.email,
+          email: event.studentData.email, 
           teacherId: id as String);
       if (isExist) {
         emit(StudentExistState());

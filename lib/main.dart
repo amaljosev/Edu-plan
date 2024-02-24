@@ -1,3 +1,4 @@
+import 'package:eduplanapp/screens/teacher/chat/bloc/chat_teacher_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => StudentBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ChatTeacherBloc(), 
         ),
       ],
       child: MaterialApp(

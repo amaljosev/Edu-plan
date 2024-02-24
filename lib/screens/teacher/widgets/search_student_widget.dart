@@ -103,7 +103,17 @@ class ScreenSearchStudent extends StatelessWidget {
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => ScreenChatPrivate(),
+                                    builder: (context) => ScreenChatPrivate(
+                                      gender: filteredStudents[index]['gender'],
+                                      image: filteredStudents[index]
+                                                  ['gender'] ==
+                                              'Gender.male'
+                                          ? 'lib/assets/images/student male.jpg'
+                                          : 'lib/assets/images/student female.png',
+                                      name:
+                                          "${filteredStudents[index]['first_name']} ${filteredStudents[index]['second_name']}",
+                                      studentId: studentId,
+                                    ),
                                   ))
                               : context.read<TeacherBloc>().add(
                                     StudentProfileEvent(
