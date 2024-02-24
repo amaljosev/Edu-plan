@@ -25,12 +25,13 @@ final class StudentActionsState extends StudentActionState {
 
 final class FetchStudentDatasSuccessState extends StudentActionState {
   final Stream<DocumentSnapshot<Object?>> studentstream;
+  final String teacherId;
   final String studentId;
   final int totalWorkingDaysCompleted;
   FetchStudentDatasSuccessState(
       {required this.studentstream,
       required this.studentId,
-      required this.totalWorkingDaysCompleted});
+      required this.totalWorkingDaysCompleted,required this.teacherId});
 }
 
 final class FetchEventsDatasSuccessDatas extends StudentActionState {

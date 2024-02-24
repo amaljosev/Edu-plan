@@ -5,6 +5,7 @@ class ChatModel {
   final String senderId;
   final String receiverId;
   final String gender;
+  final bool isTeacher;
 
   ChatModel(
       {required this.message,
@@ -12,5 +13,6 @@ class ChatModel {
       required this.date,
       required this.senderId,
       required this.name,
-      required this.receiverId});
+      required this.receiverId,
+      required this.isTeacher});
 }

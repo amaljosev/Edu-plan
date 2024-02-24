@@ -71,6 +71,7 @@ class StudentBloc extends Bloc<StudentEvent, StudentState> {
     final DocumentSnapshot classDoc = querySnapshot.docs.first;
     int totalWorkingDays = classDoc.get('toatal_working_days_completed');
     emit(FetchStudentDatasSuccessState(
+        teacherId: teacherId,
         studentstream: studentstream,
         studentId: studentId,
         totalWorkingDaysCompleted: totalWorkingDays));

@@ -104,6 +104,8 @@ class _ScreenAllStudentsTeacherState extends State<ScreenAllStudentsTeacher> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => ScreenChatPrivate(
+                                        teacherName: '',
+                                        isTeacher: true,
                                         gender: student['gender'],
                                         image: student['gender'] ==
                                                 'Gender.male'

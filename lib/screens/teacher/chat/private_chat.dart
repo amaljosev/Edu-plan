@@ -17,11 +17,15 @@ class ScreenChatPrivate extends StatelessWidget {
       required this.name,
       required this.image,
       required this.studentId,
-      required this.gender});
+      required this.gender,
+      required this.isTeacher,
+      required this.teacherName});
   final String gender;
   final String name;
   final String image;
   final String studentId;
+  final bool isTeacher;
+  final String? teacherName;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +33,12 @@ class ScreenChatPrivate extends StatelessWidget {
     return BlocConsumer<ChatTeacherBloc, ChatTeacherState>(
       listener: (context, state) {
         if (state is SendMessageSuccessState) {
-          AlertMessages().alertMessageSnakebar(context, 'Send', Colors.green);
           messageController.text = '';
         } else if (state is SendMessageErrorState) {
-          AlertMessages().alertMessageSnakebar(context, 'error', Colors.red);
+          AlertMessages().alertMessageSnakebar(
+              context,
+              'Please check your interner connection',
+              Colors.red.withOpacity(0.2));
         }
       },
       builder: (context, state) {
@@ -48,7 +54,7 @@ class ScreenChatPrivate extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                    name,
+                    isTeacher ? name : teacherName ?? '',
                     style: titleTextStyle,
                   ),
                 ),
@@ -81,13 +87,19 @@ class ScreenChatPrivate extends StatelessWidget {
                         DocumentSnapshot chat = chats[index];
                         Timestamp timestamp = chat['date'];
                         DateTime dateTime = timestamp.toDate();
+                        bool sender = chat['is_teacher'];
                         return UnconstrainedBox(
-                          alignment: Alignment.bottomRight,
+                          alignment: isTeacher
+                              ? sender
+                                  ? Alignment.bottomRight
+                                  : Alignment.bottomLeft
+                              : sender
+                                  ? Alignment.bottomLeft
+                                  : Alignment.bottomRight,
                           child: Padding(
                             padding: const EdgeInsets.all(3.0),
                             child: IntrinsicWidth(
                               child: Container(
-                                alignment: Alignment.centerRight,
                                 constraints: BoxConstraints(
                                   maxWidth: size.width * 0.6,
                                 ),
@@ -109,11 +121,15 @@ class ScreenChatPrivate extends StatelessWidget {
                                       ),
                                       SizedBox(height: 4),
                                       Row(
+                                        mainAxisAlignment: isTeacher
+                                            ? MainAxisAlignment.start
+                                            : MainAxisAlignment.end,
                                         children: [
                                           Text(
-                                            "${DateFormat('HH:mm').format(dateTime)}",
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                            "${DateFormat('H:mm').format(dateTime)}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 10),
                                           ),
                                         ],
                                       ),
@@ -165,6 +181,7 @@ class ScreenChatPrivate extends StatelessWidget {
                                         if (messageController.text != '') {
                                           context.read<ChatTeacherBloc>().add(
                                               SendMessageEvent(
+                                                  isTeacher: isTeacher,
                                                   gender: gender,
                                                   receiverId: studentId,
                                                   name: name,

@@ -9,10 +9,11 @@ final class SendMessageEvent extends ChatTeacherActionEvent {
   final String message;
   final String name;
   final String gender;
+  final bool isTeacher;
   SendMessageEvent(
       {required this.message,
       required this.gender,
       required this.name,
-      required this.receiverId});
+      required this.receiverId,required this.isTeacher});
 }
 

@@ -104,6 +104,8 @@ class ScreenSearchStudent extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ScreenChatPrivate(
+                                      teacherName: '',
+                                      isTeacher: true,
                                       gender: filteredStudents[index]['gender'],
                                       image: filteredStudents[index]
                                                   ['gender'] ==

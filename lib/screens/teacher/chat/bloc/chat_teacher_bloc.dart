@@ -20,6 +20,7 @@ class ChatTeacherBloc extends Bloc<ChatTeacherEvent, ChatTeacherState> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String id = prefs.getString('teacherId').toString();
     final messageModel = ChatModel(
+        isTeacher: event.isTeacher,
         gender: event.gender,
         message: event.message,
         date: DateTime.now(),

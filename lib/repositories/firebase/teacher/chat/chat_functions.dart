@@ -8,6 +8,8 @@ class ChatFunctions {
         'student_name': data.name,
         'message': data.message,
         'sender_id': data.senderId,
+        'receiver_id':data.receiverId,
+        'is_teacher':data.isTeacher,
         'date': data.date
       };
       await FirebaseFirestore.instance
@@ -47,5 +49,4 @@ class ChatFunctions {
     final studentsStream = studentCollection.snapshots();
     return studentsStream;
   }
-  
 }

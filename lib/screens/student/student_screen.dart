@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eduplanapp/repositories/core/textstyle.dart';
 import 'package:eduplanapp/screens/student/fee/screen_fee.dart';
+import 'package:eduplanapp/screens/teacher/chat/private_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/repositories/core/colors.dart';
@@ -14,7 +16,6 @@ import 'package:eduplanapp/screens/student/bloc/student_bloc.dart';
 import 'package:eduplanapp/screens/student/tasks/student_tasks_screen.dart';
 import 'package:eduplanapp/screens/student/widgets/student_home_widget.dart';
 import 'package:eduplanapp/screens/teacher/school_events/school_events.dart';
-import 'package:eduplanapp/screens/widgets/my_appbar.dart';
 
 class ScreenStudent extends StatefulWidget {
   const ScreenStudent({super.key});
@@ -35,6 +36,7 @@ class _ScreenStudentState extends State<ScreenStudent> {
   int currentPageIndex = 0;
   int totalWorkingDays = 0;
   String id = '';
+  String teacherId = '';
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -68,6 +70,7 @@ class _ScreenStudentState extends State<ScreenStudent> {
           currentPageIndex = state.currentPageIndex;
         }
         if (state is FetchStudentDatasSuccessState) {
+          teacherId = state.teacherId;
           id = state.studentId;
           totalWorkingDays = state.totalWorkingDaysCompleted;
           studentstream = state.studentstream;
@@ -112,8 +115,36 @@ class _ScreenStudentState extends State<ScreenStudent> {
                 Map<String, dynamic> studentData =
                     snapshot.data!.data() as Map<String, dynamic>;
                 final String name = studentData['first_name'];
+                final String full_name =
+                    "${studentData['first_name']} ${studentData['second_name']}";
+                final String gender = studentData['gender'];
+
                 return Scaffold(
-                  appBar: myAppbar('Student'),
+                  appBar: AppBar(
+                    title: Text(
+                      'Student',
+                      style: appbarTextStyle,
+                    ),
+                    actions: [
+                      IconButton(
+                          onPressed: () => Navigator.push( 
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScreenChatPrivate(
+                                    name: full_name,
+                                    image: 'lib/assets/images/teacher.jpg',
+                                    studentId: id,
+                                    gender: gender,
+                                    isTeacher: false,
+                                    teacherName: studentData['class_Teacher']),
+                              )),
+                          icon: Icon(
+                            Icons.chat_outlined,
+                            color: contentColor,
+                          ))
+                    ],
+                    backgroundColor: appbarColor,
+                  ),
                   body: IndexedStack(
                     index: currentPageIndex,
                     children: <Widget>[

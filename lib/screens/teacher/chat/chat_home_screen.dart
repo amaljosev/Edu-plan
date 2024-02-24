@@ -40,6 +40,8 @@ class ScreenChatHome extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ScreenChatPrivate(
+                            teacherName: null,
+                            isTeacher: true,
                               name: name,
                               image: img,
                               studentId: studentId,
