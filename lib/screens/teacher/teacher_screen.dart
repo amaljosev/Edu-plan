@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:eduplanapp/repositories/core/textstyle.dart';
-import 'package:eduplanapp/screens/teacher/chat/chat_home_screen.dart';
+import 'package:eduplanapp/screens/teacher/chat/chat_home_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eduplanapp/repositories/core/colors.dart';

@@ -8,8 +8,8 @@ class ChatFunctions {
         'student_name': data.name,
         'message': data.message,
         'sender_id': data.senderId,
-        'receiver_id':data.receiverId,
-        'is_teacher':data.isTeacher,
+        'receiver_id': data.receiverId,
+        'is_teacher': data.isTeacher,
         'date': data.date
       };
       await FirebaseFirestore.instance
@@ -48,5 +48,22 @@ class ChatFunctions {
         .collection(studentName);
     final studentsStream = studentCollection.snapshots();
     return studentsStream;
+  }
+
+  Future<bool> deleteMessage(
+      {required String studentId,
+      required String messageId,
+      required String studentName}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('chat')
+          .doc(studentId)
+          .collection(studentName)
+          .doc(messageId)
+          .delete();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

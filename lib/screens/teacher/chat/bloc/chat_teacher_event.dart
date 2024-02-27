@@ -14,6 +14,33 @@ final class SendMessageEvent extends ChatTeacherActionEvent {
       {required this.message,
       required this.gender,
       required this.name,
-      required this.receiverId,required this.isTeacher});
+      required this.receiverId,
+      required this.isTeacher});
 }
 
+final class SelectMessageEvent extends ChatTeacherActionEvent {
+  final int index;
+  SelectMessageEvent({required this.index});
+}
+
+final class DeleteMessageEvent extends ChatTeacherActionEvent {
+  final String messageId;
+  final String studentId;
+  final String studentName;
+  DeleteMessageEvent({
+    required this.messageId,
+    required this.studentId,
+    required this.studentName,
+  });
+}
+
+final class EditMessageEvent extends ChatTeacherActionEvent {
+  final String messageId;
+  final String studentId;
+  final String studentName;
+  EditMessageEvent({
+    required this.messageId,
+    required this.studentId,
+    required this.studentName,
+  });
+}

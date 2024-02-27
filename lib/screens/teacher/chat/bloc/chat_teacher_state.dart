@@ -12,4 +12,19 @@ final class SendMessageLoadingState extends ChatTeacherActionState {}
 
 final class SendMessageErrorState extends ChatTeacherActionState {}
 
+final class SelectMessageState extends ChatTeacherActionState {
+  final int index;
+  SelectMessageState({required this.index});
+}
 
+final class DeleteMessageSuccessState extends ChatTeacherActionState {}
+
+final class DeleteMessageLoadingState extends ChatTeacherActionState {}
+
+final class DeleteMessageErrorState extends ChatTeacherActionState {}
+
+final class EditMessageSuccessState extends ChatTeacherActionState {}
+
+final class EditMessageLoadingState extends ChatTeacherActionState {}
+
+final class EditMessageErrorState extends ChatTeacherActionState {}

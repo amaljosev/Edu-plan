@@ -12,6 +12,9 @@ part 'chat_teacher_state.dart';
 class ChatTeacherBloc extends Bloc<ChatTeacherEvent, ChatTeacherState> {
   ChatTeacherBloc() : super(ChatTeacherInitial()) {
     on<SendMessageEvent>(sendMessageEvent);
+    on<SelectMessageEvent>(selectMessageEvent);
+    on<DeleteMessageEvent>(deleteMessageEvent);
+    on<EditMessageEvent>(editMessageEvent);
   }
 
   FutureOr<void> sendMessageEvent(
@@ -39,4 +42,30 @@ class ChatTeacherBloc extends Bloc<ChatTeacherEvent, ChatTeacherState> {
       emit(SendMessageSuccessState());
     }
   }
+
+  FutureOr<void> selectMessageEvent(
+      SelectMessageEvent event, Emitter<ChatTeacherState> emit) {
+    emit(SelectMessageState(index: event.index));
+  }
+
+  FutureOr<void> deleteMessageEvent(
+      DeleteMessageEvent event, Emitter<ChatTeacherState> emit) async {
+    emit(DeleteMessageLoadingState());
+    try {
+      final bool response = await ChatFunctions().deleteMessage(
+          studentId: event.studentId,
+          messageId: event.messageId,
+          studentName: event.studentName);
+      if (response) {
+        emit(DeleteMessageSuccessState());
+      } else {
+        emit(DeleteMessageErrorState());
+      }
+    } catch (e) {
+      emit(DeleteMessageErrorState());
+    }
+  }
+
+  FutureOr<void> editMessageEvent(
+      EditMessageEvent event, Emitter<ChatTeacherState> emit) {}
 }

@@ -97,7 +97,7 @@ class _ScreenStudentState extends State<ScreenStudent> {
           } else if (state.index == 3) {
             attendanceMessage(
                 isTeacher: false,
-                context: context,
+                context: context, 
                 size: size,
                 studentsMap: state.studentsMap,
                 totalWorkingDaysCompleted: state.totalWorkingDaysCompleted);
@@ -127,7 +127,7 @@ class _ScreenStudentState extends State<ScreenStudent> {
                     ),
                     actions: [
                       IconButton(
-                          onPressed: () => Navigator.push( 
+                          onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ScreenChatPrivate(
