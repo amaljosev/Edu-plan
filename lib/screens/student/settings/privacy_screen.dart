@@ -72,6 +72,7 @@ class ScreenPrivacyPolicyStudent extends StatelessWidget {
               Text(
                   '''The app only collects the teacher's name, email, password, and contact number during the sign-up process. However, this information is treated as a request, and it is not stored permanently in the database if the individual is not a teacher at that particular school. The data is sent to the admin as a request, and if the admin verifies that the individual is a teacher and accepts the request, only then is the data stored in the database. Otherwise, if the admin rejects the request, the data will be cleared.''',
                   textAlign: TextAlign.justify),
+              SizedBox(height: 8.0),
               Text(
                 '2.2 Students Data:',
                 style: TextStyle(
@@ -80,6 +81,26 @@ class ScreenPrivacyPolicyStudent extends StatelessWidget {
               ),
               Text(
                   '''Students or any other users do not directly provide any details to the app; they can only log in if they are a student. Personal details and credit information for students are already provided to the school administration, and they have the authority to use this data. The administration, in turn, is responsible for providing the data to teachers. Teachers are tasked with creating accounts for students and generating passwords. As a result, students or any other users cannot log in without the corresponding email and password. Students directly provide their email to teachers, ensuring that teachers are aware of the student and that the school possesses their data. Teachers are responsible for creating and distributing passwords to students to prevent unauthorized access to the app.''',
+                  textAlign: TextAlign.justify),
+              SizedBox(height: 8.0),
+              Text(
+                '2.3 Chat Communication:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                  '''Chat data, including messages and associated user information, is stored securely in Firebase Database. The data is encrypted during transmission and at rest, ensuring the confidentiality and integrity of user communications.''',
+                  textAlign: TextAlign.justify),
+              SizedBox(height: 8.0),
+              Text(
+                '2.3 Payment Information:',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                  '''EDU PLAN utilizes the services of Razorpay for processing payments. When making transactions through the app, certain payment information, such as user contact and payment details, may be collected by Razorpay. Please refer to Razorpay's privacy policy for more details on how your payment information is handled: https://razorpay.com/privacy/.''',
                   textAlign: TextAlign.justify),
               SizedBox(height: 8.0),
               Text(
