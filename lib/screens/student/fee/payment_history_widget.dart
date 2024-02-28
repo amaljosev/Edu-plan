@@ -122,7 +122,7 @@ class _PaymentHistoryWidgetState extends State<PaymentHistoryWidget> {
                                     openCheckout(amount);
                                   },
                             child: Text(
-                              isPayed ? 'Paied' : 'Pay Now',
+                              isPayed ? 'Paied' : 'Pay Now', 
                               style: listViewTextStyle,
                             ),
                           ),

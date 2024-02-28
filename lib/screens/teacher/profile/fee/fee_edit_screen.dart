@@ -201,7 +201,7 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                               return dateB.compareTo(dateA);
                             });
                             return SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.4,  
+                              height: MediaQuery.of(context).size.height * 0.4,
                               child: ListView.separated(
                                 padding: EdgeInsets.all(10),
                                 separatorBuilder: (context, index) => kHeight,
@@ -275,8 +275,8 @@ class _ScreenFeeUpdateTeacherState extends State<ScreenFeeUpdateTeacher> {
                                         widget.isOfflinePaymet
                                             ? ''
                                             : isPayed
-                                                ? 'Payed'
-                                                : 'Not Payed',
+                                                ? 'Paid'
+                                                : 'Not Paid',
                                         style: TextStyle(
                                             color: isPayed
                                                 ? Colors.green

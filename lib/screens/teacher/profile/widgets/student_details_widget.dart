@@ -68,7 +68,7 @@ class StudentDetailsWidget extends StatelessWidget {
               ? const EdgeInsets.all(8)
               : const EdgeInsets.only(top: 15.0),
           child: Container(
-            height: isTeacher ? 280 : 250,
+            height: isTeacher ? 280 : 260,
             width: double.infinity,
             decoration: BoxDecoration(
                 color: isTeacher ? appbarColor : null,

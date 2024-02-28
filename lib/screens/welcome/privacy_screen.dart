@@ -35,10 +35,10 @@ class ScreenFirstPrivacy extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center, 
                           children: [
                             Text(
-                              'Privacy Policy for EDU PLAN Mobile App',
+                              'Privacy Policy for EDU PLAN', 
                               style: TextStyle(
                                 fontSize: 18.0,
                                 fontWeight: FontWeight.bold,
