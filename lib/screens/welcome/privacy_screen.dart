@@ -51,7 +51,7 @@ class ScreenFirstPrivacy extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(right:10.0), 
+                              padding: const EdgeInsets.only(right: 10.0),
                               child: Text(
                                 'Effective Date: 18-12-2023',
                                 style: TextStyle(
@@ -91,6 +91,7 @@ class ScreenFirstPrivacy extends StatelessWidget {
                         Text(
                             '''The app only collects the teacher's name, email, password, and contact number during the sign-up process. However, this information is treated as a request, and it is not stored permanently in the database if the individual is not a teacher at that particular school. The data is sent to the admin as a request, and if the admin verifies that the individual is a teacher and accepts the request, only then is the data stored in the database. Otherwise, if the admin rejects the request, the data will be cleared.''',
                             textAlign: TextAlign.justify),
+                        SizedBox(height: 8.0),
                         Text(
                           '2.2 Students Data:',
                           style: TextStyle(
@@ -102,8 +103,28 @@ class ScreenFirstPrivacy extends StatelessWidget {
                             textAlign: TextAlign.justify),
                         SizedBox(height: 8.0),
                         Text(
-                          '2.3 School Administration Data:',
+                          '2.3 Chat Communication:',
                           style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                            '''Chat data, including messages and associated user information, is stored securely in Firebase Database. The data is encrypted during transmission and at rest, ensuring the confidentiality and integrity of user communications.''',
+                            textAlign: TextAlign.justify),
+                        SizedBox(height: 8.0),
+                        Text(
+                          '2.4 Payment Information:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                            '''EDU PLAN utilizes the services of Razorpay for processing payments. When making transactions through the app, certain payment information, such as user contact and payment details, may be collected by Razorpay. Please refer to Razorpay's privacy policy for more details on how your payment information is handled: https://razorpay.com/privacy/.''',
+                            textAlign: TextAlign.justify),
+                        SizedBox(height: 8.0),
+                        Text(
+                          '2.5 School Administration Data:',
+                          style: TextStyle( 
                             fontWeight: FontWeight.bold,
                           ),
                         ),

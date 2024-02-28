@@ -94,7 +94,7 @@ class ScreenPrivacyPolicyStudent extends StatelessWidget {
                   textAlign: TextAlign.justify),
               SizedBox(height: 8.0),
               Text(
-                '2.3 Payment Information:',
+                '2.4 Payment Information:',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -104,7 +104,7 @@ class ScreenPrivacyPolicyStudent extends StatelessWidget {
                   textAlign: TextAlign.justify),
               SizedBox(height: 8.0),
               Text(
-                '2.3 School Administration Data:',
+                '2.5 School Administration Data:',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           create: (context) => StudentBloc(),
         ),
         BlocProvider(
-          create: (context) => ChatTeacherBloc(), 
+          create: (context) => ChatTeacherBloc(),
         ),
       ],
       child: MaterialApp(
