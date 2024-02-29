@@ -24,7 +24,7 @@ class _ScreenSchoolEventsState extends State<ScreenSchoolEvents> {
 
   @override
   void initState() {
-    context
+    context 
         .read<TeacherSecondBloc>()
         .add(FetchFormDatasEvent(isTeacher: widget.isTeacher));
     super.initState();
@@ -36,8 +36,10 @@ class _ScreenSchoolEventsState extends State<ScreenSchoolEvents> {
       canPop: false,
       onPopInvoked: (didPop) async {
         if (!didPop) {
-          context.read<StudentBloc>().add(
-                        StudentBottomNavigationEvent(currentPageIndex: 0)); 
+          Navigator.pop(context);
+          context
+              .read<StudentBloc>()
+              .add(StudentBottomNavigationEvent(currentPageIndex: 0));
         }
       },
       child: BlocConsumer<TeacherSecondBloc, TeacherSecondState>(
@@ -53,7 +55,8 @@ class _ScreenSchoolEventsState extends State<ScreenSchoolEvents> {
         if (state is DeleteEventLoadingState) {
           const CircularProgressIndicator();
         } else if (state is DeleteEventSuccessState) {
-          AlertMessages().alertMessageSnakebar(context, 'Deleted', Colors.green);
+          AlertMessages()
+              .alertMessageSnakebar(context, 'Deleted', Colors.green);
         } else if (state is DeleteEventErrorState) {
           AlertMessages()
               .alertMessageSnakebar(context, 'Please try again', Colors.red);
@@ -74,9 +77,10 @@ class _ScreenSchoolEventsState extends State<ScreenSchoolEvents> {
                   DateTime dateB = (b['date'] as Timestamp).toDate();
                   return dateB.compareTo(dateA);
                 });
-      
+
                 return Scaffold(
-                    appBar: widget.isTeacher ? myAppbar('Upcoming Events') : null,
+                    appBar:
+                        widget.isTeacher ? myAppbar('Upcoming Events') : null,
                     body: SafeArea(
                       child: Column(
                         children: [
@@ -95,7 +99,7 @@ class _ScreenSchoolEventsState extends State<ScreenSchoolEvents> {
                                   if (widget.isTeacher == false) {
                                     name = '${data['name']}';
                                   }
-      
+
                                   DateTime date =
                                       (data['date'] as Timestamp).toDate();
                                   String formattedDate =
@@ -104,7 +108,7 @@ class _ScreenSchoolEventsState extends State<ScreenSchoolEvents> {
                                       '${data[widget.isTeacher ? 'title' : 'absent_date']}';
                                   String topic =
                                       '${data[widget.isTeacher ? 'topic' : 'reason']}';
-      
+
                                   return Card(
                                     color: appbarColor,
                                     child: ListTile(
@@ -143,11 +147,13 @@ class _ScreenSchoolEventsState extends State<ScreenSchoolEvents> {
                                                     reason: widget.isTeacher
                                                         ? ''
                                                         : topic,
-                                                    studentName: widget.isTeacher
-                                                        ? ''
-                                                        : name,
+                                                    studentName:
+                                                        widget.isTeacher
+                                                            ? ''
+                                                            : name,
                                                     eventId: eventId,
-                                                    isTeacher: widget.isTeacher)),
+                                                    isTeacher:
+                                                        widget.isTeacher)),
                                             child: Icon(
                                               Icons.close,
                                               color: buttonColor,

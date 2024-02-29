@@ -22,9 +22,15 @@ class ScreenChatHome extends StatelessWidget {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
               List<DocumentSnapshot> students = snapshot.data!.docs;
+              students.sort((a, b) {
+                Timestamp timestampA = a['date'];
+                Timestamp timestampB = b['date'];
+                return timestampB.compareTo(timestampA);
+              });
               return ListView.builder(
                 itemBuilder: (context, index) {
                   DocumentSnapshot student = students[index];
+
                   final String studentId = students[index].id;
                   final name = student['name'];
                   final gender = student['gender'];
@@ -40,8 +46,8 @@ class ScreenChatHome extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ScreenChatPrivate(
-                            teacherName: null,
-                            isTeacher: true,
+                              teacherName: null,
+                              isTeacher: true,
                               name: name,
                               image: img,
                               studentId: studentId,
@@ -65,7 +71,7 @@ class ScreenChatHome extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => ScreenAllStudentsTeacher(isChat: true),
             )),
-        child: Icon(Icons.chat_outlined),
+        child: Icon(Icons.people_alt_outlined),
       ),
     );
   }
